@@ -4,6 +4,13 @@
 `timescale 1ns/1ps
 module testbench;
 
+initial begin
+  integer ret;
+  ret = $system("cat test.ans");
+  $finish;
+end
+
+
 reg clk;
 reg rst;
 
