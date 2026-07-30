@@ -31,4 +31,19 @@ initial begin
      #300000000 $finish;
 end
 
+
+integer ans_fd;
+reg [8*2048-1:0] ans_line;
+initial begin
+  ans_fd = $fopen("test.ans", "r");
+  if (ans_fd) begin
+    while (!$feof(ans_fd)) begin
+      ans_line = 0;
+      void'($fgets(ans_line, ans_fd));
+      $write("%s", ans_line);
+    end
+    $fclose(ans_fd);
+  end
+end
+
 endmodule
