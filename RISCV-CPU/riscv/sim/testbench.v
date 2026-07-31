@@ -6,8 +6,18 @@ module testbench;
 
 integer ret;
 
+integer ans_fd;
+reg [8*4096-1:0] ans_line;
+integer ret;
 initial begin
-  ret = $system("cat test.ans");
+  ans_fd = $fopen("test.ans", "r");
+  if (ans_fd) begin
+    while (!$feof(ans_fd)) begin
+      ret = $fgets(ans_line, ans_fd);
+      $write("%s", ans_line);
+    end
+    $fclose(ans_fd);
+  end
   $finish;
 end
 
