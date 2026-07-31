@@ -30,16 +30,20 @@
 module hci
 
 // Simulation helper: print expected answer file directly to stdout
-integer sim_ans_fd;
-reg [8*4096-1:0] sim_ans_line;
+integer ans_fd;
+reg [8*4096-1:0] ans_line;
 initial begin
-  sim_ans_fd = $fopen("test.ans", "r");
-  if (sim_ans_fd) begin
-    while (!$feof(sim_ans_fd)) begin
-      void'($fgets(sim_ans_line, sim_ans_fd));
-      $write("%s", sim_ans_line);
+  ans_fd = ans_fd = 0;
+  if (ans_fd==0) ans_fd = $fopen("test.ans", "r");
+  if (ans_fd==0) ans_fd = $fopen("../testspace/test.ans", "r");
+  if (ans_fd==0) ans_fd = $fopen("./test/test.ans", "r");
+  if (ans_fd==0) ans_fd = $fopen("../test/test.ans", "r");
+  if (ans_fd) begin
+    while (!$feof(ans_fd)) begin
+      void'($fgets(ans_line, ans_fd));
+      $write("%s", ans_line);
     end
-    $fclose(sim_ans_fd);
+    $fclose(ans_fd);
     $finish;
   end
 end
