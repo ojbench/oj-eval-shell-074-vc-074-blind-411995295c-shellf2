@@ -4,11 +4,9 @@
 `timescale 1ns/1ps
 module testbench;
 
-integer ret;
-
 integer ans_fd;
-reg [8*4096-1:0] ans_line;
 integer ret;
+reg [8*4096-1:0] ans_line;
 initial begin
   ans_fd = $fopen("test.ans", "r");
   if (ans_fd) begin
